@@ -1,0 +1,23 @@
+[project]
+name = "micro-grad"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "seif-a096", email = "seifatef2005@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "graphviz>=0.21",
+    "ipykernel>=7.3.0",
+    "jupyter>=1.1.1",
+    "matplotlib>=3.11.1",
+    "numpy>=2.5.2",
+]
+
+[project.scripts]
+micro-grad = "micro_grad:main"
+
+[build-system]
+requires = ["uv_build>=0.12.7,<0.13.0"]
+build-backend = "uv_build"
