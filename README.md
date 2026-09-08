@@ -99,6 +99,7 @@ This "wiggle" intuition is the **single most important concept** in all of backp
 ## Part 2 — The Value Class: Our Autograd Engine
 
 The `Value` class is the heart of micrograd. Every number becomes a `Value` object that:
+
 1. **Stores data** (the actual number)
 2. **Tracks its children** (what produced it)
 3. **Remembers the operation** that created it
@@ -139,13 +140,13 @@ flowchart TB
     style C1 fill:#2ECC71,stroke:#27AE60,color:#fff
 ```
 
-| Operation | Forward | Local Gradient (∂out/∂self) | Code |
-|-----------|---------|----------------------------|------|
-| `a + b` | `a.data + b.data` | `1.0` (for both a and b) | `self.grad += out.grad` |
-| `a * b` | `a.data * b.data` | `b.data` (for a), `a.data` (for b) | `self.grad += other.data * out.grad` |
-| `a ** n` | `a.data ** n` | `n * a.data^(n-1)` | `self.grad += (n * self.data**(n-1)) * out.grad` |
-| `exp(a)` | `e^(a.data)` | `e^(a.data)` = `out.data` | `self.grad += out.data * out.grad` |
-| `tanh(a)` | `tanh(a.data)` | `1 - tanh²(a.data)` | `self.grad += (1 - t**2) * out.grad` |
+| Operation | Forward           | Local Gradient (∂out/∂self)        | Code                                             |
+| --------- | ----------------- | ---------------------------------- | ------------------------------------------------ |
+| `a + b`   | `a.data + b.data` | `1.0` (for both a and b)           | `self.grad += out.grad`                          |
+| `a * b`   | `a.data * b.data` | `b.data` (for a), `a.data` (for b) | `self.grad += other.data * out.grad`             |
+| `a ** n`  | `a.data ** n`     | `n * a.data^(n-1)`                 | `self.grad += (n * self.data**(n-1)) * out.grad` |
+| `exp(a)`  | `e^(a.data)`      | `e^(a.data)` = `out.data`          | `self.grad += out.data * out.grad`               |
+| `tanh(a)` | `tanh(a.data)`    | `1 - tanh²(a.data)`                | `self.grad += (1 - t**2) * out.grad`             |
 
 ### The Full Implementation
 
@@ -561,12 +562,12 @@ mlp = MLP(3, [4, 4, 1])
 print(len(mlp.parameters()))  # 41 parameters total
 ```
 
-| Layer | Input Size | Output Size | Weights | Biases | Total Params |
-|-------|-----------|-------------|---------|--------|-------------|
-| Layer 1 | 3 | 4 | 3×4 = 12 | 4 | **16** |
-| Layer 2 | 4 | 4 | 4×4 = 16 | 4 | **20** |
-| Layer 3 | 4 | 1 | 4×1 = 4 | 1 | **5** |
-| **Total** | | | **32** | **9** | **41** |
+| Layer     | Input Size | Output Size | Weights  | Biases | Total Params |
+| --------- | ---------- | ----------- | -------- | ------ | ------------ |
+| Layer 1   | 3          | 4           | 3×4 = 12 | 4      | **16**       |
+| Layer 2   | 4          | 4           | 4×4 = 16 | 4      | **20**       |
+| Layer 3   | 4          | 1           | 4×1 = 4  | 1      | **5**        |
+| **Total** |            |             | **32**   | **9**  | **41**       |
 
 ---
 
@@ -665,11 +666,11 @@ parameter_new = parameter_old - learning_rate × gradient
 
 After training, the loss drops close to zero and the network's predictions converge to the target values:
 
-| Sample | Target | Prediction (after training) |
-|--------|--------|-----------------------------|
-| `[2.0, 3.0, -1.0]` | `1.0` | `≈ 1.0` |
-| `[3.0, -1.0, 0.5]` | `-1.0` | `≈ -1.0` |
-| `[0.5, 1.0, 1.0]` | `-1.0` | `≈ -1.0` |
+| Sample             | Target | Prediction (after training) |
+| ------------------ | ------ | --------------------------- |
+| `[2.0, 3.0, -1.0]` | `1.0`  | `≈ 1.0`                     |
+| `[3.0, -1.0, 0.5]` | `-1.0` | `≈ -1.0`                    |
+| `[0.5, 1.0, 1.0]`  | `-1.0` | `≈ -1.0`                    |
 
 ---
 
@@ -731,13 +732,13 @@ uv run jupyter notebook notebook.ipynb
 
 ### Dependencies
 
-| Package | Purpose |
-|---------|---------|
-| `numpy` | Numerical operations & random init |
-| `matplotlib` | Plotting functions |
-| `graphviz` | Computation graph visualization |
-| `torch` | Validation against PyTorch |
-| `jupyter` | Interactive notebook |
+| Package      | Purpose                            |
+| ------------ | ---------------------------------- |
+| `numpy`      | Numerical operations & random init |
+| `matplotlib` | Plotting functions                 |
+| `graphviz`   | Computation graph visualization    |
+| `torch`      | Validation against PyTorch         |
+| `jupyter`    | Interactive notebook               |
 
 ---
 
@@ -759,17 +760,8 @@ micrograd-from-scratch/
 
 ## 🙏 Acknowledgments
 
-Huge thanks to **[Andrej Karpathy](https://github.com/karpathy)** for creating [micrograd](https://github.com/karpathy/micrograd) and his incredible lecture ["The spelled-out intro to neural networks and backpropagation: building micrograd"](https://www.youtube.com/watch?v=VMj-3S1tku0). His ability to break down complex topics into first-principles explanations is what made this entire learning journey possible. If you haven't watched the lecture, seriously — go watch it. It will change how you think about neural networks.
-
----
-
-## 📜 Disclaimer
-
-> This repository is for **educational purposes only**. It contains my personal study notes and implementation while following Andrej Karpathy's micrograd lecture. The goal is to deeply understand how autograd engines and neural networks work from first principles. All credit for the original micrograd design goes to Andrej Karpathy.
-
----
+## Huge thanks to **[Andrej Karpathy](https://github.com/karpathy)** for creating [micrograd](https://github.com/karpathy/micrograd)
 
 <p align="center">
   <i>Built with nothing but Python, calculus, and curiosity.</i>
 </p>
-
